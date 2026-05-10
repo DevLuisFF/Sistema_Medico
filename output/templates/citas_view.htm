@@ -1,0 +1,387 @@
+<!doctype html>
+<html  {$html_attrs}>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{$pagetitle}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link REL="stylesheet" href="styles/default.css" type="text/css">
+		{BEGIN rtlCSS}
+		<link REL="stylesheet" href="styles/defaultRTL.css" type="text/css">
+		{END rtlCSS}
+		{BEGIN styleCSSFiles}
+		<link REL="stylesheet" href="{$stylepath}" type="text/css">
+		{END styleCSSFiles}
+	</head>
+
+	<body class="{$stylename} function-view" {$bodyattrs}>
+	{BEGIN body}
+		{$header}
+		<style>
+			{$containerCss}
+		</style>
+		
+		<div class="container r-small-page" 
+			data-body-align="center"
+			data-body-width="standard"
+		>
+							{BEGIN top_block}
+<div class="r-form" data-location="top" id="form_top_{$pageid}" data-makeup="small" {$form_top} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="top_c1" data-pageid="{$pageid}"	{$cell_top_c1}
+	class=" r-ori-vert			col-md-12
+	">
+	 
+		<h2 data-itemtype="view_header" data-itemid="view_header" {$item_view_header} data-pageid="{$pageid}" >{$pagetitlelabel citas view}</h2>
+	</div>					</div>
+	</div>		
+{END top_block}
+									{BEGIN above-grid_block}
+<div class="r-form" data-location="above-grid" id="form_above-grid_{$pageid}" data-makeup="small" {$form_above-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	</div>		
+{END above-grid_block}
+									{BEGIN grid_block}
+
+
+
+
+ 
+	 
+												<table 
+	data-body-align="center"
+	data-location="grid" id="form_grid_{$pageid}" data-makeup="small" {$form_grid} data-pageid="{$pageid}" 
+	class="r-edit-form" cellpadding="0" cellspacing="0" 
+	{$grid_hiddenattr} 
+		data-form-width="1"
+		
+		data-v-width="4"
+	>
+	<tbody>
+										<tr>
+										
+
+{BEGIN cellblock_grid_c3}
+<td
+	{$cell_grid_c3}
+	class=" r-ori-vert"
+	
+				data-fullwidth
+		
+			data-cellId="grid_c3" data-pageid="{$pageid}"
+		data-v-cell="4"
+		
+>
+	<div edit-form-cell class="clearfix">
+				
+{BEGIN id_cita_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_id_cita}  r-vertical-field" data-fieldname="id_cita" data-signal-error-for="id_cita{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field" {$item_integrated_edit_field} data-pageid="{$pageid}" data-field="id_cita" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_id_cita}">
+		
+		{BEGIN id_cita_label}{$label citas id_cita }{END id_cita_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$id_cita_value}	</div>
+
+		
+</div>
+
+
+{END id_cita_fieldblock}
+											
+{BEGIN id_paciente_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_id_paciente}  r-vertical-field" data-fieldname="id_paciente" data-signal-error-for="id_paciente{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field1" {$item_integrated_edit_field1} data-pageid="{$pageid}" data-field="id_paciente" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_id_paciente}">
+		
+		{BEGIN id_paciente_label}{$label citas id_paciente }{END id_paciente_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$id_paciente_value}	</div>
+
+		
+</div>
+
+
+{END id_paciente_fieldblock}
+											
+{BEGIN id_medico_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_id_medico}  r-vertical-field" data-fieldname="id_medico" data-signal-error-for="id_medico{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field2" {$item_integrated_edit_field2} data-pageid="{$pageid}" data-field="id_medico" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_id_medico}">
+		
+		{BEGIN id_medico_label}{$label citas id_medico }{END id_medico_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$id_medico_value}	</div>
+
+		
+</div>
+
+
+{END id_medico_fieldblock}
+											
+{BEGIN fecha_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_fecha}  r-vertical-field" data-fieldname="fecha" data-signal-error-for="fecha{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field3" {$item_integrated_edit_field3} data-pageid="{$pageid}" data-field="fecha" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_fecha}">
+		
+		{BEGIN fecha_label}{$label citas fecha }{END fecha_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$fecha_value}	</div>
+
+		
+</div>
+
+
+{END fecha_fieldblock}
+											
+{BEGIN hora_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_hora}  r-vertical-field" data-fieldname="hora" data-signal-error-for="hora{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field4" {$item_integrated_edit_field4} data-pageid="{$pageid}" data-field="hora" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_hora}">
+		
+		{BEGIN hora_label}{$label citas hora }{END hora_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$hora_value}	</div>
+
+		
+</div>
+
+
+{END hora_fieldblock}
+											
+{BEGIN estado_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_estado}  r-vertical-field" data-fieldname="estado" data-signal-error-for="estado{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field5" {$item_integrated_edit_field5} data-pageid="{$pageid}" data-field="estado" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_estado}">
+		
+		{BEGIN estado_label}{$label citas estado }{END estado_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$estado_value}	</div>
+
+		
+</div>
+
+
+{END estado_fieldblock}
+											
+{BEGIN motivo_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_motivo}  r-vertical-field" data-fieldname="motivo" data-signal-error-for="motivo{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field6" {$item_integrated_edit_field6} data-pageid="{$pageid}" data-field="motivo" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_motivo}">
+		
+		{BEGIN motivo_label}{$label citas motivo }{END motivo_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$motivo_value}	</div>
+
+		
+</div>
+
+
+{END motivo_fieldblock}
+											
+{BEGIN diagnostico_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_diagnostico}  r-vertical-field" data-fieldname="diagnostico" data-signal-error-for="diagnostico{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field7" {$item_integrated_edit_field7} data-pageid="{$pageid}" data-field="diagnostico" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_diagnostico}">
+		
+		{BEGIN diagnostico_label}{$label citas diagnostico }{END diagnostico_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$diagnostico_value}	</div>
+
+		
+</div>
+
+
+{END diagnostico_fieldblock}
+											
+{BEGIN tratamiento_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_tratamiento}  r-vertical-field" data-fieldname="tratamiento" data-signal-error-for="tratamiento{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field8" {$item_integrated_edit_field8} data-pageid="{$pageid}" data-field="tratamiento" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_tratamiento}">
+		
+		{BEGIN tratamiento_label}{$label citas tratamiento }{END tratamiento_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$tratamiento_value}	</div>
+
+		
+</div>
+
+
+{END tratamiento_fieldblock}
+											
+{BEGIN receta_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_receta}  r-vertical-field" data-fieldname="receta" data-signal-error-for="receta{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field9" {$item_integrated_edit_field9} data-pageid="{$pageid}" data-field="receta" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_receta}">
+		
+		{BEGIN receta_label}{$label citas receta }{END receta_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$receta_value}	</div>
+
+		
+</div>
+
+
+{END receta_fieldblock}
+											
+{BEGIN notas_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_notas}  r-vertical-field" data-fieldname="notas" data-signal-error-for="notas{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field10" {$item_integrated_edit_field10} data-pageid="{$pageid}" data-field="notas" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_notas}">
+		
+		{BEGIN notas_label}{$label citas notas }{END notas_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$notas_value}	</div>
+
+		
+</div>
+
+
+{END notas_fieldblock}
+											
+{BEGIN created_at_fieldblock}
+
+
+<div class="r-integrated-field form-group clearfix {$fielddispclass_created_at}  r-vertical-field" data-fieldname="created_at" data-signal-error-for="created_at{$id}" data-itemtype="integrated_edit_field" data-itemid="integrated_edit_field11" {$item_integrated_edit_field11} data-pageid="{$pageid}" data-field="created_at" >
+
+	
+	<label class="col-md-offset-3 col-md-6" for="{$labelfor_created_at}">
+		
+		{BEGIN created_at_label}{$label citas created_at }{END created_at_label}
+	</label>
+	<div class="col-md-offset-3 col-md-6" >
+		{$created_at_value}	</div>
+
+		
+</div>
+
+
+{END created_at_fieldblock}
+	
+								</td>
+			{END cellblock_grid_c3}
+								</tr>
+			</tbody></table>
+{END grid_block}
+									{BEGIN below-grid_block}
+<div class="r-form" data-location="below-grid" id="form_below-grid_{$pageid}" data-makeup="small" {$form_below-grid} data-pageid="{$pageid}"
+		data-v-width="4"
+	data-v-margin="1"
+	
+>		
+	 
+		<div class="row">
+			 
+				<div 
+	data-cellId="below-grid_c1" data-pageid="{$pageid}"	{$cell_below-grid_c1}
+	class="			col-md-6
+	">
+	 
+		{BEGIN back_button}
+<span data-itemtype="view_back_list" data-itemid="view_back_list" {$item_view_back_list} data-pageid="{$pageid}" data-button-item>
+	<a type="button" class="btn btn-default   
+	" {$backbutton_attrs} >
+							Volver a la lista			</a>
+</span>
+{END back_button}
+	 
+		{BEGIN close_button}
+<span data-itemtype="view_close" data-itemid="view_close" {$item_view_close} data-pageid="{$pageid}" data-button-item>
+	<a type="button" class="btn btn-default   
+	" href="#" {$closebutton_attrs} >
+							Cerrar ventana			</a>
+</span>
+{END close_button}
+	</div>			 
+				<div 
+	data-cellId="below-grid_c2" data-pageid="{$pageid}"	{$cell_below-grid_c2}
+	class="r-align-right r-ori-vert			col-md-6
+	">
+	 
+		<span data-itemtype="hamburger" data-itemid="hamburger" {$item_hamburger} data-pageid="{$pageid}" data-button-item>
+	<span class="dropdown">
+		<button type="button" class="btn btn-default   dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">		
+							<span class="glyphicon glyphicon-menu-hamburger"></span>
+									<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+							{BEGIN edit_page_button}
+	<li data-itemtype="view_edit" data-itemid="view_edit" {$item_view_edit} data-pageid="{$pageid}" >
+				<a  href="#" {$edit_page_button_attrs} >
+				
+		Editar		
+		</a>
+	</li>
+{END edit_page_button}
+								<li data-itemtype="view_pdf" data-itemid="view_pdf" {$item_view_pdf} data-pageid="{$pageid}" >
+				<a class="pdflink" {$pdflink_attrs} >
+				
+		Vista PDF		
+		</a>
+	</li>
+					</ul>
+	</span>
+</span>
+	</div>					</div>
+	</div>		
+{END below-grid_block}
+			</div>
+		{$footer}
+	{END body}
+	</body>
+</html>
