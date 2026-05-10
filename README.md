@@ -18,8 +18,8 @@ Centralizar la operación diaria de una clínica o consultorio mediante una inte
 
 - PHP compatible con el código generado por PHPRunner 10.0.
 - Base de datos MySQL/MariaDB definida en `db_citas_medicas.sql`.
-- Interfaz modernizada con **Bulma CSS** para las nuevas vistas personalizadas.
-- Se conserva Bootstrap/Bootswatch en las pantallas generadas por PHPRunner para evitar romper plantillas internas; las nuevas pantallas Bulma se agregan como páginas independientes dentro de `output/`.
+- Interfaz modernizada con **Bulma CSS** para dashboards, notificaciones, reportes y plantillas PHPRunner.
+- Para mantener compatibilidad con PHPRunner 10.0, las clases Bootstrap internas siguen existiendo donde el generador las necesita, pero se aplica una capa visual `bulma-runner-bridge.css` que reemplaza el aspecto Bootswatch por una apariencia Bulma/moderna.
 
 ## Modelo de datos principal
 
@@ -31,7 +31,7 @@ El esquema incluye las tablas:
 - `citas`: agenda médica, estado y detalles clínicos.
 - `usuarios`: credenciales y tipo de usuario.
 
-La extensión agregada al esquema permite vincular usuarios de tipo `cliente` con un registro de `pacientes` mediante `usuarios.id_paciente`.
+La extensión agregada al esquema permite vincular usuarios de tipo `cliente` con un registro de `pacientes` mediante `usuarios.id_paciente`. También se agregan índices de apoyo para acelerar dashboards, notificaciones de hoy y reportes por rol.
 
 ## Roles del sistema
 
@@ -50,6 +50,7 @@ Las vistas personalizadas se ubican en `output/` y usan componentes compartidos 
 - `dashboard_cliente.php`: panel del paciente/cliente.
 - `notificaciones.php`: alertas de citas pendientes o confirmadas para hoy.
 - `reportes.php`: indicadores por estado, especialidad y actividad mensual.
+- Plantillas de `output/templates/`: incluyen Bulma y una capa visual para que las vistas generadas (listas, altas, ediciones, búsquedas, importación/exportación) tengan una estética consistente.
 
 ## Uso básico
 
@@ -65,4 +66,5 @@ Para mantener compatibilidad con PHPRunner:
 
 - Evitar editar masivamente plantillas generadas si luego se regenerará el proyecto.
 - Mantener nuevas funcionalidades en `output/custom/` o páginas PHP independientes.
+- Si se regenera el proyecto, volver a incluir `custom/css/bulma-runner-bridge.css` en las plantillas PHPRunner para preservar la apariencia Bulma.
 - Si se regenera desde PHPRunner, revisar que los enlaces del menú a dashboards, notificaciones y reportes se conserven.

@@ -114,6 +114,20 @@ function md_role_home($role)
     return "dashboard_recepcion.php";
 }
 
+function md_require_role($allowedRoles)
+{
+    $user = md_current_user();
+    if (!in_array($user["tipo_usuario"], $allowedRoles)) {
+        header("Location: " . md_role_home($user["tipo_usuario"]));
+        exit();
+    }
+}
+
+function md_role_can_see_catalogs($role)
+{
+    return $role == "admin" || $role == "recepcion";
+}
+
 function md_redirect_to_role_home()
 {
     $user = md_current_user();
@@ -220,8 +234,8 @@ function md_render_header($title, $active)
         <div class="navbar-start">
             <a class="navbar-item <?php echo $active == 'dashboard' ? 'is-active' : ''; ?>" href="dashboard.php">Dashboard</a>
             <a class="navbar-item" href="citas_list.php">Citas</a>
-            <a class="navbar-item" href="pacientes_list.php">Pacientes</a>
-            <a class="navbar-item" href="medicos_list.php">Médicos</a>
+            <?php if (md_role_can_see_catalogs($user["tipo_usuario"]) || $user["tipo_usuario"] == "medico") { ?><a class="navbar-item" href="pacientes_list.php">Pacientes</a><?php } ?>
+            <?php if (md_role_can_see_catalogs($user["tipo_usuario"])) { ?><a class="navbar-item" href="medicos_list.php">Médicos</a><?php } ?>
             <a class="navbar-item <?php echo $active == 'reportes' ? 'is-active' : ''; ?>" href="reportes.php">Reportes</a>
             <a class="navbar-item <?php echo $active == 'notificaciones' ? 'is-active' : ''; ?>" href="notificaciones.php">Notificaciones <?php if ($badge) { ?><span class="tag is-danger is-rounded ml-2"><?php echo (int)$badge; ?></span><?php } ?></a>
         </div>
@@ -234,6 +248,26 @@ function md_render_header($title, $active)
 </nav>
 <section class="section medical-page">
     <div class="container is-fluid">
+    <?php
+}
+
+function md_render_search_panel($title, $subtitle, $target, $placeholder)
+{
+    ?>
+    <div class="box medical-search">
+        <h2 class="title is-5"><?php echo md_h($title); ?></h2>
+        <p class="subtitle is-7"><?php echo md_h($subtitle); ?></p>
+        <form method="get" action="<?php echo md_h($target); ?>">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    <input class="input" type="search" name="qs" placeholder="<?php echo md_h($placeholder); ?>">
+                </div>
+                <div class="control">
+                    <button class="button is-link" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
     <?php
 }
 

@@ -1,0 +1,202 @@
+/*
+ * Capa visual Bulma para pantallas generadas por PHPRunner 10.
+ * No elimina clases Bootstrap internas para conservar compatibilidad JS,
+ * pero reemplaza el aspecto Bootswatch por una estética Bulma/moderna.
+ */
+:root {
+    --medical-primary: #2563eb;
+    --medical-primary-dark: #1d4ed8;
+    --medical-accent: #14b8a6;
+    --medical-bg: #f4f8fb;
+    --medical-border: #e5edf6;
+    --medical-text: #1f2937;
+    --medical-muted: #64748b;
+}
+
+body {
+    background: linear-gradient(135deg, #f8fbff 0%, #eef7f5 100%) !important;
+    color: var(--medical-text);
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+}
+
+.r-topheader .navbar,
+.navbar.navbar-default,
+.bs-fullwidth-navbar {
+    background: rgba(255, 255, 255, .96) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--medical-border) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 12px 35px rgba(31, 41, 55, .06) !important;
+}
+
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-text {
+    color: var(--medical-text) !important;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-brand:hover {
+    background: #eff6ff !important;
+    color: var(--medical-primary) !important;
+}
+
+.r-body,
+.r-content,
+.r-data-block,
+.r-grid,
+.panel,
+.bs-welcome-item {
+    border-radius: 18px !important;
+}
+
+.panel,
+.r-data-block,
+.bs-welcome-item,
+.rnr-c,
+.modal-content {
+    background: #fff !important;
+    border: 1px solid var(--medical-border) !important;
+    box-shadow: 0 18px 45px rgba(31, 41, 55, .08) !important;
+}
+
+.panel-heading,
+.bs-welcome-header,
+.rnr-toprow,
+.r-grid > .r-fluid > tbody > tr:first-child {
+    background: linear-gradient(135deg, #eff6ff 0%, #f0fdfa 100%) !important;
+    border-color: var(--medical-border) !important;
+    color: var(--medical-text) !important;
+}
+
+.panel-title,
+.bs-welcome-header a,
+h1, h2, h3, h4 {
+    color: var(--medical-text) !important;
+    font-weight: 700 !important;
+}
+
+.table,
+.r-grid table {
+    background: #fff !important;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table > thead > tr > th,
+.r-grid th {
+    background: #f8fafc !important;
+    border-bottom: 1px solid var(--medical-border) !important;
+    color: var(--medical-muted) !important;
+    font-size: 12px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.table > tbody > tr > td,
+.r-grid td {
+    border-top: 1px solid #eef2f7 !important;
+    vertical-align: middle !important;
+}
+
+.table-hover > tbody > tr:hover,
+.r-grid tr:hover > td {
+    background: #f8fbff !important;
+}
+
+.btn,
+button,
+input[type="button"],
+input[type="submit"] {
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    transition: all .18s ease-in-out;
+}
+
+.btn-primary,
+.btn-info,
+.btn-success {
+    background: var(--medical-primary) !important;
+    border-color: var(--medical-primary) !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-info:hover,
+.btn-success:hover {
+    background: var(--medical-primary-dark) !important;
+    border-color: var(--medical-primary-dark) !important;
+    transform: translateY(-1px);
+}
+
+.btn-default,
+.btn-link {
+    background: #fff !important;
+    border-color: var(--medical-border) !important;
+    color: var(--medical-primary) !important;
+}
+
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+select,
+textarea {
+    border: 1px solid #dbe7f3 !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+.form-control:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--medical-primary) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .14) !important;
+    outline: 0 !important;
+}
+
+.label,
+.badge,
+[data-field] .label {
+    border-radius: 999px !important;
+    font-weight: 600 !important;
+}
+
+.bs-welcome-item {
+    display: inline-block;
+    margin: 1rem;
+    min-height: 150px;
+    overflow: hidden;
+    vertical-align: top;
+    width: min(280px, calc(100% - 2rem));
+}
+
+.bs-welcome-content {
+    color: var(--medical-muted) !important;
+    padding: 1rem !important;
+}
+
+.r-search-field,
+.searchOptions,
+.dropdown-menu {
+    border-color: var(--medical-border) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 16px 40px rgba(31, 41, 55, .12) !important;
+}
+
+@media (max-width: 768px) {
+    .r-body,
+    .r-content {
+        padding-left: .75rem !important;
+        padding-right: .75rem !important;
+    }
+
+    .bs-welcome-item {
+        width: calc(100% - 2rem);
+    }
+}

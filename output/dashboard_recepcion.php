@@ -2,6 +2,7 @@
 require_once("include/dbcommon.php");
 require_once("custom/lib/medical_dashboard.php");
 md_require_login();
+md_require_role(array("admin", "recepcion"));
 $user = md_current_user();
 $today = md_prepare(md_today());
 $tomorrow = md_prepare(date("Y-m-d", strtotime("+1 day")));
@@ -40,6 +41,7 @@ md_render_header("Dashboard de recepción", "dashboard");
             <a class="button is-info is-light" href="pacientes_list.php">Buscar paciente</a>
             <a class="button is-warning is-light" href="reportes.php">Ver reportes</a>
         </div>
+        <?php md_render_search_panel("Búsqueda rápida", "Encuentra citas o pacientes desde los listados PHPRunner.", "citas_list.php", "Paciente, médico, motivo o estado"); ?>
         <div class="box notification-list">
             <h2 class="title is-5">Notificaciones de hoy</h2>
             <?php if (!count($notifications)) { ?><p class="has-text-grey">No hay alertas pendientes para hoy.</p><?php } ?>
