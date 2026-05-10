@@ -62,3 +62,8 @@ ALTER TABLE `usuarios` ADD FOREIGN KEY (`id_medico`) REFERENCES `medicos` (`id_m
 -- PHPRunner mantiene la tabla usuarios; este campo permite vincular cuentas tipo "cliente" con pacientes.
 ALTER TABLE `usuarios` ADD COLUMN `id_paciente` integer;
 ALTER TABLE `usuarios` ADD FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id_paciente`);
+
+-- Índices de apoyo para dashboards, notificaciones y reportes por rol.
+CREATE INDEX `idx_citas_fecha_estado` ON `citas` (`fecha`, `estado`);
+CREATE INDEX `idx_citas_paciente_fecha` ON `citas` (`id_paciente`, `fecha`);
+CREATE INDEX `idx_usuarios_tipo_activo` ON `usuarios` (`tipo_usuario`, `activo`);

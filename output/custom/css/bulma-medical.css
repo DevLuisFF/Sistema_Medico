@@ -84,3 +84,25 @@ body {
     border-bottom: 0;
     padding-bottom: 0;
 }
+
+.medical-search .field.has-addons .control:first-child .input {
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 12px;
+}
+
+.medical-search .field.has-addons .control:last-child .button {
+    border-bottom-right-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .medical-hero {
+        border-radius: 18px;
+        padding: 2rem !important;
+    }
+
+    .medical-page .table-container {
+        border: 1px solid #e8eef6;
+        border-radius: 14px;
+    }
+}

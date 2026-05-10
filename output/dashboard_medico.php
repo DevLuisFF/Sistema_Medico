@@ -2,6 +2,7 @@
 require_once("include/dbcommon.php");
 require_once("custom/lib/medical_dashboard.php");
 md_require_login();
+md_require_role(array("admin", "medico"));
 $user = md_current_user();
 $where = md_base_where_for_user($user);
 $today = md_prepare(md_today());
@@ -38,6 +39,7 @@ md_render_header("Dashboard médico", "dashboard");
             <a class="button is-primary is-light" href="pacientes_list.php">Buscar expediente</a>
             <a class="button is-info is-light" href="reportes.php">Reportes clínicos</a>
         </div>
+        <?php md_render_search_panel("Buscar expediente", "Consulta pacientes antes de registrar diagnóstico o receta.", "pacientes_list.php", "Nombre, apellido, teléfono o email"); ?>
         <div class="box notification-list"><h2 class="title is-5">Alertas</h2><?php if (!count($notifications)) { ?><p class="has-text-grey">Sin citas pendientes hoy.</p><?php } ?><?php foreach ($notifications as $notification) { ?><article class="media"><div class="media-content"><strong><?php echo md_h(substr($notification["hora"], 0, 5)); ?></strong><br><?php echo md_h($notification["paciente"]); ?></div></article><?php } ?></div>
     </div>
 </div>
