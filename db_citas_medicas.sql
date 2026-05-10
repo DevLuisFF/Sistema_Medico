@@ -43,7 +43,7 @@ CREATE TABLE `usuarios` (
   `id_usuario` integer PRIMARY KEY,
   `username` varchar(50) UNIQUE NOT NULL,
   `password_hash` varchar(255) NOT NULL,
-  `tipo_usuario` varchar(20) NOT NULL COMMENT 'admin, recepcion, medico',
+  `tipo_usuario` varchar(20) NOT NULL COMMENT 'admin, recepcion, medico, cliente',
   `id_medico` integer,
   `activo` boolean DEFAULT true
 );
@@ -57,3 +57,8 @@ ALTER TABLE `citas` ADD FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id_
 ALTER TABLE `citas` ADD FOREIGN KEY (`id_medico`) REFERENCES `medicos` (`id_medico`);
 
 ALTER TABLE `usuarios` ADD FOREIGN KEY (`id_medico`) REFERENCES `medicos` (`id_medico`);
+
+-- Extensión para el dashboard del paciente/cliente.
+-- PHPRunner mantiene la tabla usuarios; este campo permite vincular cuentas tipo "cliente" con pacientes.
+ALTER TABLE `usuarios` ADD COLUMN `id_paciente` integer;
+ALTER TABLE `usuarios` ADD FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id_paciente`);
