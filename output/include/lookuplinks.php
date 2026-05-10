@@ -43,6 +43,9 @@ function InitLookupLinks()
 	$lookupTableLinks["pacientes"]["citas.id_paciente"]["edit"] = array("table" => "citas", "field" => "id_paciente", "page" => "edit");
 	$lookupTableLinks["medicos"]["citas.id_medico"]["edit"] = array("table" => "citas", "field" => "id_medico", "page" => "edit");
 	$lookupTableLinks["especialidades"]["medicos.id_especialidad"]["edit"] = array("table" => "medicos", "field" => "id_especialidad", "page" => "edit");
+	$lookupTableLinks["medicos"]["usuarios.id_medico"]["edit"] = array("table" => "usuarios", "field" => "id_medico", "page" => "edit");
+	$lookupTableLinks["medicos"]["admin_members.id_medico"]["edit"] = array("table" => "admin_members", "field" => "id_medico", "page" => "edit");
+	$lookupTableLinks["medicos"]["admin_users.id_medico"]["edit"] = array("table" => "admin_users", "field" => "id_medico", "page" => "edit");
 }
 
 ?>

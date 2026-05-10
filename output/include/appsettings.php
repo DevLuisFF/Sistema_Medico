@@ -504,6 +504,8 @@ $globalSettings["strFromEmail"] = "";
 
 $ajaxSearchStartsWith = true;
 
+$globalSettings["isDynamicPerm"] = true;
+
 
 
 
@@ -575,7 +577,7 @@ $cLoginTable = "usuarios";
 $cDisplayNameField = "username";
 $cUserNameField	= "username";
 $cPasswordField	= "password_hash";
-$cUserGroupField = "";
+$cUserGroupField = "username";
 $cEmailField = "";
 
 if ($cDisplayNameField == ''){
@@ -592,6 +594,8 @@ $arrCustomPages = array();
 												$cUserNameFieldType	= 200;
 												$cPasswordFieldType	= 200;
 																														
+$gPermissionsRefreshTime = 0;
+$gPermissionsRead = false;
 
 $useAJAX = true;
 $suggestAllContent = true;
@@ -625,6 +629,9 @@ $tableCaptions["Spanish"]["especialidades"] = "Especialidades";
 $tableCaptions["Spanish"]["medicos"] = "Medicos";
 $tableCaptions["Spanish"]["pacientes"] = "Pacientes";
 $tableCaptions["Spanish"]["usuarios"] = "Usuarios";
+$tableCaptions["Spanish"]["admin_rights"] = "Admin Rights";
+$tableCaptions["Spanish"]["admin_members"] = "Admin Members";
+$tableCaptions["Spanish"]["admin_users"] = "Add/Edit users";
 
 
 $globalEvents = new class_GlobalEvents;
@@ -684,9 +691,9 @@ $scriptname = getFileNameFromURL();
 }
 
 
-$isGroupSecurity = false;
+$isGroupSecurity = true;
 
-$isUseRTEBasic = false;
+$isUseRTEBasic = true;
 
 $isUseRTECK = false;
 

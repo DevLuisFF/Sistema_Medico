@@ -48,6 +48,9 @@ function DBLookup($sql)
 class tDAL
 {
 	var $tblsistema_medico_at_localhost__citas;
+	var $tblsistema_medico_at_localhost__citas_medicas_uggroups;
+	var $tblsistema_medico_at_localhost__citas_medicas_ugmembers;
+	var $tblsistema_medico_at_localhost__citas_medicas_ugrights;
 	var $tblsistema_medico_at_localhost__especialidades;
 	var $tblsistema_medico_at_localhost__medicos;
 	var $tblsistema_medico_at_localhost__pacientes;
@@ -60,6 +63,9 @@ class tDAL
 		if($this->lstTables)
 			return;
 		$this->lstTables[] = array("name" => "citas", "varname" => "sistema_medico_at_localhost__citas", "altvarname" => "citas", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
+		$this->lstTables[] = array("name" => "citas_medicas_uggroups", "varname" => "sistema_medico_at_localhost__citas_medicas_uggroups", "altvarname" => "citas_medicas_uggroups", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
+		$this->lstTables[] = array("name" => "citas_medicas_ugmembers", "varname" => "sistema_medico_at_localhost__citas_medicas_ugmembers", "altvarname" => "citas_medicas_ugmembers", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
+		$this->lstTables[] = array("name" => "citas_medicas_ugrights", "varname" => "sistema_medico_at_localhost__citas_medicas_ugrights", "altvarname" => "citas_medicas_ugrights", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
 		$this->lstTables[] = array("name" => "especialidades", "varname" => "sistema_medico_at_localhost__especialidades", "altvarname" => "especialidades", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
 		$this->lstTables[] = array("name" => "medicos", "varname" => "sistema_medico_at_localhost__medicos", "altvarname" => "medicos", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
 		$this->lstTables[] = array("name" => "pacientes", "varname" => "sistema_medico_at_localhost__pacientes", "altvarname" => "pacientes", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");

@@ -17,6 +17,21 @@ class TextAreaField extends TextControl
 		if($this->pageObject->pSetEdit->isUseRTE($this->field))
 		{
 			$value = $this->RTESafe($value);
+			// creating src url
+			$browser = "";
+			if(@$_REQUEST["browser"]=="ie")
+				$browser = "&browser=ie";
+
+			// add JS code
+			echo "<iframe frameborder=\"0\" vspace=\"0\" hspace=\"0\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" id=\""
+				.$this->cfield."\" ".(($mode==MODE_INLINE_EDIT || $mode==MODE_INLINE_ADD) && $this->is508==true ? "alt=\""
+				.$this->strLabel."\" " : "")."name=\"".$this->cfield."\" title=\"Basic rich text editor\" style='";
+			if ( !$this->pageObject->mobileTemplateMode())
+				echo "width: " . ($nWidth+1) . "px;";
+			echo "height: " . ($nHeight+100) . "px;'";
+			echo " src=\"".GetTableLink("rte", "", "ptype=".$this->pageObject->pageType."&table=".GetTableURL($this->pageObject->tName)."&"."id="
+				.$this->id."&".$this->iquery.$browser."&".($mode==MODE_ADD || $mode==MODE_INLINE_ADD ? "action=add" : ''))."\">";
+			echo "</iframe>";
 		}
 		else
 		{

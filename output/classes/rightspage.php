@@ -98,8 +98,8 @@ class RightsPage extends ListPage
 		$this->groups[-2] = "<"."Por defecto".">";
 		$this->groups[-3] = "<"."Invitado".">";
 
-		$sql = "select ". $grConnection->addFieldWrappers( "" ) .", ". $grConnection->addFieldWrappers( "" )
-			." from ". $grConnection->addTableWrappers( "" ) ." order by ". $grConnection->addFieldWrappers( "" );
+		$sql = "select ". $grConnection->addFieldWrappers( "GroupID" ) .", ". $grConnection->addFieldWrappers( "Label" )
+			." from ". $grConnection->addTableWrappers( "citas_medicas_uggroups" ) ." order by ". $grConnection->addFieldWrappers( "Label" );
 
 		$qResult = $grConnection->query( $sql );
 		while( $tdata = $qResult->fetchNumeric() )
@@ -136,11 +136,11 @@ class RightsPage extends ListPage
 	function getRights()
 	{
 		// It's expected that $this->tName is equal to 'admin_right' so the page's db connection is used #9875
-		$sql = "select ". $this->connection->addFieldWrappers( "" )
-			.", ". $this->connection->addFieldWrappers( "" )
-			.", ". $this->connection->addFieldWrappers( "" )
-			." from ". $this->connection->addTableWrappers( "" )
-			." order by ". $this->connection->addFieldWrappers( "" );
+		$sql = "select ". $this->connection->addFieldWrappers( "GroupID" )
+			.", ". $this->connection->addFieldWrappers( "TableName" )
+			.", ". $this->connection->addFieldWrappers( "AccessMask" )
+			." from ". $this->connection->addTableWrappers( "citas_medicas_ugrights" )
+			." order by ". $this->connection->addFieldWrappers( "GroupID" );
 
 		$qResult = $this->connection->query( $sql );
 		while( $tdata = $qResult->fetchNumeric() )
@@ -530,10 +530,10 @@ class RightsPage extends ListPage
 	 */
 	function updateTablePermissions( $table, $group, $mask )
 	{
-		$rightWTableName = $this->connection->addTableWrappers( "" );
-		$accessMaskWFieldName = $this->connection->addFieldWrappers( "" );
-		$groupisWFieldName = $this->connection->addFieldWrappers( "" );
-		$tableNameWFieldName = $this->connection->addFieldWrappers( "" );
+		$rightWTableName = $this->connection->addTableWrappers( "citas_medicas_ugrights" );
+		$accessMaskWFieldName = $this->connection->addFieldWrappers( "AccessMask" );
+		$groupisWFieldName = $this->connection->addFieldWrappers( "GroupID" );
+		$tableNameWFieldName = $this->connection->addFieldWrappers( "TableName" );
 		$groupWhere = $groupisWFieldName."=". $group ." and ". $tableNameWFieldName ."=". $this->connection->prepareString( $table );
 
 		// It's expected that $this->tName is equal to 'admin_right' so the page's db connection is used #9875

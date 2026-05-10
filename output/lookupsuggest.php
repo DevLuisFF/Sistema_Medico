@@ -43,7 +43,7 @@ if ( $masterTable != "" && isset($_SESSION[ $masterTable . "_masterRecordData" ]
 $contextParams["data"] = my_json_decode( postvalue('data') );
 RunnerContext::push( new RunnerContextItem( $pageType, $contextParams));
 
-if( $strTableName != "" )
+if( $strTableName != "usuarios" )
 {
 	if( !isLogged() )  
 		return;	

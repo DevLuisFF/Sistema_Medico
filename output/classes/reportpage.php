@@ -566,7 +566,7 @@ class ReportPage extends RunnerPage
 		
 		$grid_row["data"] = $this->crossTableObj->getCrossTableData();		
 	
-		$allow_export = true;
+		$allow_export = $this->permis[ $this->tName ]["export"]; 
 		$this->xt->assign( "export_link", $allow_export && !$this->noRecordsFound );
 		
 		$this->xt->assign( "prints_block", $this->printAvailable() && !$this->noRecordsFound );
@@ -659,8 +659,8 @@ class ReportPage extends RunnerPage
 		else
 			$this->noRecordsFound = true;
 		
-		$allow_export = true;
-		$allow_search = true;
+		$allow_export = $this->permis[ $this->tName ]["export"];
+		$allow_search = $this->permis[ $this->tName ]["search"];		
 		$this->xt->assign("export_link", $allow_export && $this->arrReport['countRows'] > 0);
 		$this->xt->assign("prints_block", $allow_export && $this->arrReport['countRows'] > 0);		
 		$this->xt->assign("printall_link", $allow_export && $this->arrReport['countRows'] > $this->pageSize && $this->pageSize > 0);
@@ -1034,8 +1034,8 @@ class ReportPage extends RunnerPage
 
 		//$this->prepareBreadcrumbs();		
 
-		$allow_search = true;
-		$allow_export = true;
+		$allow_search = $this->permis[ $this->tName ]["search"];
+		$allow_export = $this->permis[ $this->tName ]["export"]; 
 
 		$this->xt->assign("grid_block", $allow_search);			
 		$this->xt->assign("toplinks_block", $allow_search);

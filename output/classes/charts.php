@@ -495,6 +495,14 @@ class Chart
 			return true;
 		if("pacientes" == $this->chrt_array['tables'][0])
 			return true;
+		if("citas_medicas_ugrights" == $this->chrt_array['tables'][0])
+			return true;
+		if("usuarios" == $this->chrt_array['tables'][0])
+			return true;
+		if("usuarios" == $this->chrt_array['tables'][0])
+			return true;
+		if("usuarios" == $this->chrt_array['tables'][0])
+			return true;
 		return false;
 	}
 	

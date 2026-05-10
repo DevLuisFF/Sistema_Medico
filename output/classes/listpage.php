@@ -731,7 +731,19 @@ class ListPage extends RunnerPage
 					}
 					$this->audit->LogDelete($this->tName, $deleted_audit_values, $keys);
 				}
-						
+						if( $this->tName == ADMIN_USERS )
+				{
+					// delete _ugmembers corr. rec.
+					global $cman;
+					$grConnection = $cman->getForUserGroups();
+					
+					$sql = "delete from ". $grConnection->addTableWrappers( "citas_medicas_ugmembers" ) 
+						." where ". $grConnection->addFieldWrappers( "UserName" ) 
+						."=". $grConnection->prepareString( $deleted_values[ GetUserNameField() ] );
+
+					$grConnection->exec( $sql );
+				}
+				
 				if($this->eventExists("AfterDelete"))
 				{
 					RunnerContext::pushRecordContext( $deleted_values, $this );

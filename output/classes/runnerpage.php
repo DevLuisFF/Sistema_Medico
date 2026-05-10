@@ -2512,7 +2512,12 @@ class RunnerPage
 				getMenuNodes_main($menuNodesObject);
 				return $this->menuNodes[$name];
 			}
-	
+				if($name == 'adminarea')
+			{
+				getMenuNodes_adminarea($menuNodesObject);
+				return $this->menuNodes[$name];
+			}
+
 
 		}
 		return $this->menuNodes[$name];

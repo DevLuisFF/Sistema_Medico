@@ -187,11 +187,11 @@ class MembersPage extends ListPage_Simple
 		global $cman;
 		$grConnection = $cman->getForUserGroups();
 		// It's expected that $this->tName is equal to 'admin_members' so the page's db connection is used #9875
-		$sql = "select ". $grConnection->addFieldWrappers( "" )
-			.", ". $grConnection->addFieldWrappers( "" )
-			." from ". $grConnection->addTableWrappers( "" ) 
-			." order by ". $grConnection->addFieldWrappers( "" )
-			.", ". $grConnection->addFieldWrappers( "" );
+		$sql = "select ". $grConnection->addFieldWrappers( "UserName" )
+			.", ". $grConnection->addFieldWrappers( "GroupID" )
+			." from ". $grConnection->addTableWrappers( "citas_medicas_ugmembers" ) 
+			." order by ". $grConnection->addFieldWrappers( "UserName" )
+			.", ". $grConnection->addFieldWrappers( "GroupID" );
 		
 		//	select members list	
 		$qResult = $grConnection->query( $sql );
@@ -212,8 +212,8 @@ class MembersPage extends ListPage_Simple
 		$this->groups[] = array(-1, "<"."Administrador".">");
 		$this->groupFullChecked[] = true;
 		
-		$sql = "select ". $grConnection->addFieldWrappers( "" ) .", ". $grConnection->addFieldWrappers( "" )
-			." from ". $grConnection->addTableWrappers( "" ) ." order by ". $grConnection->addFieldWrappers( "" );
+		$sql = "select ". $grConnection->addFieldWrappers( "GroupID" ) .", ". $grConnection->addFieldWrappers( "Label" )
+			." from ". $grConnection->addTableWrappers( "citas_medicas_uggroups" ) ." order by ". $grConnection->addFieldWrappers( "Label" );
 		
 		$qResult = $grConnection->query( $sql );
 		while( $tdata = $qResult->fetchNumeric() )
@@ -321,9 +321,9 @@ class MembersPage extends ListPage_Simple
 		global $cman;
 		$grConnection = $cman->getForUserGroups();
 		// It's expected that $this->tName is equal to 'admin_members' so the page's db connection is used #9875		
-		$membersWTableName = $grConnection->addTableWrappers( "" );
-		$userNameWFieldName = $grConnection->addFieldWrappers( "" );
-		$groupIdWFieldName = $grConnection->addFieldWrappers( "" );
+		$membersWTableName = $grConnection->addTableWrappers( "citas_medicas_ugmembers" );
+		$userNameWFieldName = $grConnection->addFieldWrappers( "UserName" );
+		$groupIdWFieldName = $grConnection->addFieldWrappers( "GroupID" );
 		
 		foreach ($groups as $group => $state)
 		{		

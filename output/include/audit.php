@@ -318,6 +318,22 @@ class AuditTrailTable
 		{
 			return false;
 		}
+		if($table=="admin_rights")
+		{
+			return false;
+		}
+		if($table=="usuarios")
+		{
+			return false;
+		}
+		if($table=="admin_members")
+		{
+			return false;
+		}
+		if($table=="admin_users")
+		{
+			return false;
+		}
 	}
 	
 	protected function insert($datetime, $ip, $user, $table, $action, $description)
@@ -639,6 +655,22 @@ class AuditTrailFile
 			return false;
 		}
 		if($table=="pacientes")
+		{
+			return false;
+		}
+		if($table=="admin_rights")
+		{
+			return false;
+		}
+		if($table=="usuarios")
+		{
+			return false;
+		}
+		if($table=="admin_members")
+		{
+			return false;
+		}
+		if($table=="admin_users")
 		{
 			return false;
 		}

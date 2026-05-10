@@ -128,7 +128,7 @@ class ConnectionManager
 	 */	
 	public function getForUserGroups()
 	{
-		return $this->getDefault();
+		return $this->byId( "sistema_medico_at_localhost" );
 	}		
 
 	/**
@@ -320,6 +320,10 @@ class ConnectionManager
 		$connectionsIds["especialidades"] = "sistema_medico_at_localhost";
 		$connectionsIds["medicos"] = "sistema_medico_at_localhost";
 		$connectionsIds["pacientes"] = "sistema_medico_at_localhost";
+		$connectionsIds["admin_rights"] = "sistema_medico_at_localhost";
+		$connectionsIds["usuarios"] = "sistema_medico_at_localhost";
+		$connectionsIds["admin_members"] = "sistema_medico_at_localhost";
+		$connectionsIds["admin_users"] = "sistema_medico_at_localhost";
 		$this->_tablesConnectionIds = $connectionsIds;
 	}
 	

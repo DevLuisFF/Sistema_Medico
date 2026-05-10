@@ -277,6 +277,14 @@ function checkTableName($shortTName, $type=false)
 		return true;
 	if ("pacientes" == $shortTName && ($type===false || ($type!==false && $type == 0)))
 		return true;
+	if ("admin_rights" == $shortTName && ($type===false || ($type!==false && $type == 1)))
+		return true;
+	if ("usuarios" == $shortTName && ($type===false || ($type!==false && $type == 0)))
+		return true;
+	if ("admin_members" == $shortTName && ($type===false || ($type!==false && $type == 1)))
+		return true;
+	if ("admin_users" == $shortTName && ($type===false || ($type!==false && $type == 1)))
+		return true;
 	return false;
 }
 
@@ -326,10 +334,46 @@ function GetEmailField($table = "")
 function GetTablesList($pdfMode = false)
 {
 	$arr = array();
+	$strPerm = GetUserPermissions("citas");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
 		$arr[]="citas";
+	}
+	$strPerm = GetUserPermissions("especialidades");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
 		$arr[]="especialidades";
+	}
+	$strPerm = GetUserPermissions("medicos");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
 		$arr[]="medicos";
+	}
+	$strPerm = GetUserPermissions("pacientes");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
 		$arr[]="pacientes";
+	}
+	$strPerm = GetUserPermissions("admin_rights");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
+		$arr[]="admin_rights";
+	}
+	$strPerm = GetUserPermissions("usuarios");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
+		$arr[]="usuarios";
+	}
+	$strPerm = GetUserPermissions("admin_members");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
+		$arr[]="admin_members";
+	}
+	$strPerm = GetUserPermissions("admin_users");
+	if(strpos($strPerm, "P")!==false || ($pdfMode && strpos($strPerm, "S")!==false))
+	{
+		$arr[]="admin_users";
+	}
 	return $arr;
 }
 
@@ -343,6 +387,10 @@ function GetTablesListWithoutSecurity()
 	$arr[]="especialidades";
 	$arr[]="medicos";
 	$arr[]="pacientes";
+	$arr[]="admin_rights";
+	$arr[]="usuarios";
+	$arr[]="admin_members";
+	$arr[]="admin_users";
 	return $arr;
 }
 
@@ -965,47 +1013,127 @@ function IsBigInt($type)
 ////////////////////////////////////////////////////////////////////////////////
 // security functions
 ////////////////////////////////////////////////////////////////////////////////
- //the bDynamicPermissions block
+/**
+ * @param String userID
+ * @intellisense
+ */
+function ReadUserPermissions($userID = "")
+{
+	global $gPermissionsRead, $gPermissionsRefreshTime, $caseInsensitiveUsername, $cman;
+
+	if (!strlen($userID))
+		$userID = $_SESSION["UserID"];
+
+	$needreload = false;
+	if( !isset( $_SESSION["UserRights"] ) )
+		$needreload = true;
+	elseif( !isset( $_SESSION["UserRights"][ $userID ] ) )
+		$needreload = true;
+
+	if(!$needreload && ($gPermissionsRead || time()-@$_SESSION["LastReadRights"]<=$gPermissionsRefreshTime))
+		return;
+
+	$groups = array();
+	$bIsAdmin = false;
+	$gConn = $cman->getForUserGroups();
+	$userGroups = array();
+
+	if($userID != "Guest")
+	{
+
+		if($caseInsensitiveUsername)
+			$usernameClause = $gConn->upper($gConn->addFieldWrappers( "UserName" )) . "=" . $gConn->upper( $gConn->prepareString($userID) );
+		else
+			$usernameClause = $gConn->addFieldWrappers( "UserName" ) . "=" . $gConn->prepareString($userID);
+
+		$sql = "select ".$gConn->addFieldWrappers( "GroupID" )
+			.", ".$gConn->addFieldWrappers( "UserName" )
+			." from ". $gConn->addTableWrappers( "citas_medicas_ugmembers" )
+			." where " . $usernameClause;
+
+		$qResult = $gConn->query( $sql );
+		while( $data = $qResult->fetchNumeric() )
+		{
+			if ( $caseInsensitiveUsername || strcmp($data[1],$userID) == 0 )
+				$groups[] = $data[0];
+		}
+
+		if( !count($groups) )
+			$groups[] = -2;
+	}
+	else
+		$groups[] = -3;
+
+
+	$groupstr = "";
+	foreach($groups as $g)
+	{
+		if($groupstr != "")
+			$groupstr.= ",";
+		$groupstr.= $g;
+		if($g == -1)
+			$bIsAdmin = true;
+	}
+	$rights = array();
+
+	$sql = "select ". $gConn->addFieldWrappers( "TableName" )
+		.", ". $gConn->addFieldWrappers( "AccessMask" )
+		." from ". $gConn->addTableWrappers( "citas_medicas_ugrights" )
+		." where ". $gConn->addFieldWrappers( "GroupID" ) ." in (".$groupstr.")";
+
+	$qResult = $gConn->query( $sql );
+	while( $data = $qResult->fetchNumeric() )
+	{
+		if(!array_key_exists($data[0], $rights))
+		{
+			$rights[ $data[0] ] = $data[1];
+			continue;
+		}
+		for($i = 0; $i < strlen($data[1]); $i++)
+		{
+			if( strpos($rights[ $data[0] ], substr($data[1], $i, 1)) === false )
+				$rights[ $data[0] ].= substr($data[1], $i, 1);
+		}
+	}
+
+	if(!array_key_exists("UserRights", $_SESSION))
+		$_SESSION["UserRights"] = array();
+
+	if($bIsAdmin)
+		$rights[".IsAdmin"] = true;
+	$rights[".Groups"] = $groups;
+	$_SESSION["UserRights"][ $userID ] = &$rights;
+	$_SESSION["LastReadRights"] = time();
+
+	$gPermissionsRead = true;
+}
+
 
 /**
  * @intellisense
  */
-function GetUserPermissionsStatic( $table )
+function GetUserPermissionsDynamic($table="")
 {
 	if( !isLogged() )
 		return "";
+	global $strTableName,$gPermissionsRefreshTime,$gPermissionsRead;
+	if(!$table)
+		$table=$strTableName;
 
-	$extraPerm = $_SESSION["AccessLevel"] == ACCESS_LEVEL_ADMINGROUP ? 'M' : '';
-	$sUserGroup=@$_SESSION["GroupID"];
-//	default permissions
-	if($table=="citas")
+	ReadUserPermissions();
+	if(IsAdmin())
 	{
-		// grant all by default
-		return "ADESPI".$extraPerm;
+		if($table=="admin_rights")
+			return "ADESPIM";
+		if($table=="admin_members")
+			return "ADESPIM";
+		if($table=="admin_users")
+			return "ADESPIM";
 	}
-//	default permissions
-	if($table=="especialidades")
-	{
-		// grant all by default
-		return "ADESPI".$extraPerm;
-	}
-//	default permissions
-	if($table=="medicos")
-	{
-		// grant all by default
-		return "ADESPI".$extraPerm;
-	}
-//	default permissions
-	if($table=="pacientes")
-	{
-		// grant all by default
-		return "ADESPI".$extraPerm;
-	}
-	// grant nothing by default
-	return "";
+
+	return @$_SESSION["UserRights"][$_SESSION["UserID"]][$table];
 }
 
-// end of the bDynamicPermissions block
 // end of the bCreateLoginPage block
 
 
@@ -1016,7 +1144,9 @@ function GetUserPermissionsStatic( $table )
  */
 function IsAdmin()
 {
-	return false;
+	global $gPermissionsRefreshTime, $gPermissionsRead, $caseInsensitiveUsername;
+	ReadUserPermissions();
+	return array_key_exists(".IsAdmin", @$_SESSION["UserRights"][ $_SESSION["UserID"] ]);
 }
 
 /**
@@ -1045,7 +1175,7 @@ function GetUserPermissions($table="")
 			return $_SESSION["securityOverrides"][ $table ];
 	}
 
-		$permissions =  GetUserPermissionsStatic($table);
+		$permissions =  GetUserPermissionsDynamic($table);
 
 	if($globalEvents->exists("GetTablePermissions", $table))
 	{
@@ -1074,6 +1204,13 @@ if( @$_SESSION["UserID"] )
 function guestHasPermissions()
 {
 	$tables = GetTablesListWithoutSecurity();
+	ReadUserPermissions("Guest");
+	if(!count($_SESSION["UserRights"]["Guest"]))
+		return false;
+	foreach($tables as $t) {
+		if(array_key_exists( $t ,$_SESSION["UserRights"]["Guest"]))
+			return true;
+	}
 	return false;
 }
 
@@ -1117,7 +1254,7 @@ function AfterFBLogIn( $pUsername, $pPassword, $pDisplayUsername, &$pageObject =
 function SetAuthSessionData($pUsername, &$data, $fromFacebook, $password, &$pageObject = null, $fireEvents = true )
 {
 	global $globalEvents;
-	$_SESSION["GroupID"] = "";
+	$_SESSION["GroupID"] = $data["username"];
 
 
 
@@ -1179,7 +1316,18 @@ function CheckSecurity($strValue, $strAction, $table = "")
 	if( strpos($strPerm, "M") === false )
 	{
 	}
+	//	 check user group permissions
+	$localAction = strtolower($strAction);
+	if($localAction=="add" && !(strpos($strPerm, "A")===false) ||
+	   $localAction=="edit" && !(strpos($strPerm, "E")===false) ||
+	   $localAction=="delete" && !(strpos($strPerm, "D")===false) ||
+	   $localAction=="search" && !(strpos($strPerm, "S")===false) ||
+	   $localAction=="import" && !(strpos($strPerm, "I")===false) ||
+	   $localAction=="export" && !(strpos($strPerm, "P")===false) )
 		return true;
+	else
+		return false;
+	return true;
 }
 
 /**
@@ -1235,7 +1383,7 @@ function SecuritySQL($strAction, $table="", $strPerm="")
 	if(!strlen($strPerm))
 		$strPerm = GetUserPermissions($table);
 
-	if( strpos($strPerm, "M") === false )
+	if(strpos($strPerm,"M")===false)
 	{
 	}
 
@@ -2817,6 +2965,9 @@ function isLoggedAsGuest()
  */
 function isGuestLoginAvailable()
 {
+	// if guest have any permissions
+	if(guestHasPermissions())
+		return true;
 	return false;
 }
 

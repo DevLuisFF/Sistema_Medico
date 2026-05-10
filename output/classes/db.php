@@ -407,6 +407,9 @@ class DB
 		if( "sistema_medico_at_localhost" == $conn->connId )
 		{
 			$dalTables[$conn->connId][] = array("name" => "citas", "varname" => "sistema_medico_at_localhost__citas", "altvarname" => "citas", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
+			$dalTables[$conn->connId][] = array("name" => "citas_medicas_uggroups", "varname" => "sistema_medico_at_localhost__citas_medicas_uggroups", "altvarname" => "citas_medicas_uggroups", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
+			$dalTables[$conn->connId][] = array("name" => "citas_medicas_ugmembers", "varname" => "sistema_medico_at_localhost__citas_medicas_ugmembers", "altvarname" => "citas_medicas_ugmembers", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
+			$dalTables[$conn->connId][] = array("name" => "citas_medicas_ugrights", "varname" => "sistema_medico_at_localhost__citas_medicas_ugrights", "altvarname" => "citas_medicas_ugrights", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
 			$dalTables[$conn->connId][] = array("name" => "especialidades", "varname" => "sistema_medico_at_localhost__especialidades", "altvarname" => "especialidades", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
 			$dalTables[$conn->connId][] = array("name" => "medicos", "varname" => "sistema_medico_at_localhost__medicos", "altvarname" => "medicos", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");
 			$dalTables[$conn->connId][] = array("name" => "pacientes", "varname" => "sistema_medico_at_localhost__pacientes", "altvarname" => "pacientes", "connId" => "sistema_medico_at_localhost", "schema" => "", "connName" => "sistema_medico at localhost");

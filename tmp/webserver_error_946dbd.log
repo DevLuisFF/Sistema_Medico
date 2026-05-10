@@ -1,0 +1,14 @@
+[Sun May 10 00:32:31.318769 2026] [core:warn] [pid 4708:tid 584] AH00117: Ignoring deprecated use of DefaultType in line 21 of C:/Users/Lenovo/Documents/PHPRunnerProjects/Citas_Medicas/tmp/webserver.conf.
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::d640:fa99:63a8:937a. Set the 'ServerName' directive globally to suppress this message
+[Sun May 10 00:32:31.375291 2026] [mpm_winnt:notice] [pid 4708:tid 584] AH00455: Apache/2.4.10 (Win32) PHP/5.5.18 configured -- resuming normal operations
+[Sun May 10 00:32:31.375291 2026] [mpm_winnt:notice] [pid 4708:tid 584] AH00456: Apache Lounge VC11 Server built: Jul 17 2014 11:50:08
+[Sun May 10 00:32:31.375291 2026] [core:notice] [pid 4708:tid 584] AH00094: Command line: 'C:\\Program Files\\PHPRunner10.0\\EmbeddedServer\\bin\\httpd.exe -d C:/Program Files/PHPRunner10.0/EmbeddedServer -d C:\\Program Files\\PHPRunner10.0\\EmbeddedServer -f C:\\Users\\Lenovo\\Documents\\PHPRunnerProjects\\Citas_Medicas\\tmp\\webserver.conf'
+[Sun May 10 00:32:31.375291 2026] [mpm_winnt:notice] [pid 4708:tid 584] AH00418: Parent: Created child process 7108
+[Sun May 10 00:32:31.682646 2026] [core:warn] [pid 7108:tid 636] AH00117: Ignoring deprecated use of DefaultType in line 21 of C:/Users/Lenovo/Documents/PHPRunnerProjects/Citas_Medicas/tmp/webserver.conf.
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::d640:fa99:63a8:937a. Set the 'ServerName' directive globally to suppress this message
+[Sun May 10 00:32:31.700687 2026] [core:warn] [pid 7108:tid 636] AH00117: Ignoring deprecated use of DefaultType in line 21 of C:/Users/Lenovo/Documents/PHPRunnerProjects/Citas_Medicas/tmp/webserver.conf.
+AH00558: httpd.exe: Could not reliably determine the server's fully qualified domain name, using fe80::d640:fa99:63a8:937a. Set the 'ServerName' directive globally to suppress this message
+[Sun May 10 00:32:31.709273 2026] [mpm_winnt:notice] [pid 7108:tid 636] AH00354: Child: Starting 64 worker threads.
+[Sun May 10 00:35:03.523407 2026] [mpm_winnt:notice] [pid 4708:tid 584] AH00422: Parent: Received shutdown signal -- Shutting down the server.
+[Sun May 10 00:35:05.550803 2026] [mpm_winnt:notice] [pid 7108:tid 636] AH00364: Child: All worker threads have exited.
+[Sun May 10 00:35:05.566453 2026] [mpm_winnt:notice] [pid 4708:tid 584] AH00430: Parent: Child process 7108 exited successfully.
