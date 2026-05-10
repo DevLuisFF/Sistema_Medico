@@ -1,68 +1,55 @@
-# Sistema Médico - Gestión de Citas
+# MedGestión - Sistema de Gestión de Citas Médicas
 
-Sistema interno de gestión de citas médicas generado originalmente con **PHPRunner 10.0**. El proyecto administra pacientes, médicos, especialidades, usuarios y citas, manteniendo el flujo estándar de PHPRunner para listados, altas, edición, búsqueda, importación y exportación.
+Este es un sistema interno de gestión de citas médicas modernizado, basado originalmente en **PHPRunner 10.0** y potenciado con una interfaz moderna utilizando **Bulma CSS**, **FontAwesome 6** y **Chart.js**.
 
-## Objetivo
+## Características Principales
 
-Centralizar la operación diaria de una clínica o consultorio mediante una interfaz sencilla para:
+- **Interfaz Moderna**: Diseño limpio, intuitivo y responsivo utilizando Bulma CSS con efectos de glassmorphism.
+- **Dashboards por Rol**: Vistas personalizadas y optimizadas para Recepción, Médicos y Pacientes.
+- **Notificaciones Inteligentes**: Sistema de alertas en tiempo real para citas del día actual.
+- **Reportes Visuales**: Gráficos interactivos para el análisis de citas por estado y especialidad.
+- **Búsqueda Global**: Buscador unificado para localizar rápidamente pacientes, médicos y citas.
+- **Compatibilidad**: Mantiene total compatibilidad con la lógica de negocio y base de datos de PHPRunner 10.0.
 
-- Registrar pacientes, médicos y especialidades.
-- Programar y consultar citas médicas.
-- Controlar el estado de cada cita: `Pendiente`, `Confirmada`, `Cancelada` o `Atendida`.
-- Registrar diagnóstico, tratamiento, receta y notas de atención.
-- Mostrar dashboards diferenciados por rol.
-- Entregar notificaciones de citas pendientes para el día actual.
-- Consultar reportes operativos por estado, especialidad y mes.
+## Roles del Sistema
 
-## Stack y compatibilidad
+1. **Recepción (`recepcion`)**:
+   - Control total de la agenda diaria.
+   - Registro de nuevos pacientes y agendamiento de citas.
+   - Monitoreo de estados de confirmación.
+2. **Médico (`medico`)**:
+   - Vista priorizada de su agenda clínica personal.
+   - Acceso rápido a expedientes de pacientes.
+   - Registro de diagnósticos, tratamientos y recetas.
+3. **Paciente (`cliente`)**:
+   - Consulta de próximas citas y recordatorios.
+   - Acceso a su historial de atenciones y recetas emitidas.
+4. **Administrador (`admin`)**:
+   - Acceso total a la configuración del sistema y gestión de usuarios.
 
-- PHP compatible con el código generado por PHPRunner 10.0.
-- Base de datos MySQL/MariaDB definida en `db_citas_medicas.sql`.
-- Interfaz modernizada con **Bulma CSS** para las nuevas vistas personalizadas.
-- Se conserva Bootstrap/Bootswatch en las pantallas generadas por PHPRunner para evitar romper plantillas internas; las nuevas pantallas Bulma se agregan como páginas independientes dentro de `output/`.
+## Estructura del Proyecto Modernizado
 
-## Modelo de datos principal
+- `output/custom/css/bulma-medical.css`: Estilos personalizados de la nueva interfaz.
+- `output/custom/lib/medical_dashboard.php`: Biblioteca central de funciones UI y lógica de dashboards.
+- `output/dashboard.php`: Punto de entrada que redirige al dashboard según el rol.
+- `output/dashboard_[rol].php`: Implementaciones específicas de cada dashboard.
+- `output/search_bulma.php`: Motor de búsqueda global modernizado.
+- `output/citas_list_bulma.php`: Listado de citas optimizado con filtros Bulma.
 
-El esquema incluye las tablas:
+## Mantenimiento y Extensibilidad
 
-- `especialidades`: catálogo de especialidades médicas.
-- `medicos`: médicos y su especialidad.
-- `pacientes`: información demográfica y de contacto.
-- `citas`: agenda médica, estado y detalles clínicos.
-- `usuarios`: credenciales y tipo de usuario.
+Para mantener la compatibilidad con PHPRunner:
 
-La extensión agregada al esquema permite vincular usuarios de tipo `cliente` con un registro de `pacientes` mediante `usuarios.id_paciente`.
+- **No modificar** los archivos en `output/templates/` o archivos `.php` generados directamente por PHPRunner si planeas regenerar el proyecto.
+- Las nuevas funcionalidades deben residir en archivos independientes (como los archivos `_bulma.php`) o dentro de la carpeta `output/custom/`.
+- Si regeneras el proyecto con PHPRunner, asegúrate de que los enlaces en el menú principal apunten a los nuevos dashboards y vistas Bulma.
 
-## Roles del sistema
+## Instalación y Configuración
 
-- **Recepción (`recepcion`)**: gestiona agenda, pacientes, confirmaciones y reportes operativos.
-- **Médico (`medico`)**: consulta su agenda, pacientes asignados y seguimiento clínico.
-- **Paciente/Cliente (`cliente`)**: consulta sus próximas citas y notificaciones.
-- **Administrador (`admin`)**: puede usar el panel operativo general y las funciones generadas por PHPRunner.
+1. Importar la base de datos `db_citas_medicas.sql` en tu servidor MySQL.
+2. Configurar la conexión a la base de datos en los archivos de PHPRunner (`output/connections/ConnectionManager.php`).
+3. Desplegar el contenido de la carpeta `output/` en tu servidor web compatible con PHP.
+4. Acceder a `dashboard.php` tras iniciar sesión para entrar a la nueva experiencia de usuario.
 
-## Nuevas vistas Bulma
-
-Las vistas personalizadas se ubican en `output/` y usan componentes compartidos de `output/custom/lib/medical_dashboard.php`:
-
-- `dashboard.php`: redirecciona al dashboard según el rol del usuario autenticado.
-- `dashboard_recepcion.php`: panel operativo para recepción.
-- `dashboard_medico.php`: panel clínico para médicos.
-- `dashboard_cliente.php`: panel del paciente/cliente.
-- `notificaciones.php`: alertas de citas pendientes o confirmadas para hoy.
-- `reportes.php`: indicadores por estado, especialidad y actividad mensual.
-
-## Uso básico
-
-1. Importar o actualizar la base de datos con `db_citas_medicas.sql`.
-2. Publicar el contenido de `output/` en el servidor configurado para PHPRunner.
-3. Configurar la conexión a base de datos en los archivos generados por PHPRunner si cambia el entorno.
-4. Iniciar sesión con un usuario activo.
-5. Entrar a `dashboard.php` para acceder automáticamente al dashboard del rol correspondiente.
-
-## Mantenimiento
-
-Para mantener compatibilidad con PHPRunner:
-
-- Evitar editar masivamente plantillas generadas si luego se regenerará el proyecto.
-- Mantener nuevas funcionalidades en `output/custom/` o páginas PHP independientes.
-- Si se regenera desde PHPRunner, revisar que los enlaces del menú a dashboards, notificaciones y reportes se conserven.
+---
+*Desarrollado con enfoque en la usabilidad y eficiencia clínica.*

@@ -136,6 +136,21 @@ function md_status_class($estado)
     return "is-warning";
 }
 
+function md_status_icon($estado)
+{
+    $estado = strtolower((string)$estado);
+    if ($estado == "confirmada") {
+        return "fa-check-circle";
+    }
+    if ($estado == "atendida") {
+        return "fa-user-check";
+    }
+    if ($estado == "cancelada") {
+        return "fa-times-circle";
+    }
+    return "fa-clock";
+}
+
 function md_today()
 {
     return date("Y-m-d");
@@ -208,27 +223,94 @@ function md_render_header($title, $active)
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo md_h($title); ?> | Sistema Médico</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="custom/css/bulma-medical.css">
 </head>
 <body>
 <nav class="navbar is-white medical-navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item has-text-weight-bold" href="dashboard.php">Sistema Médico</a>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="medicalNav"><span></span><span></span><span></span><span></span></a>
-    </div>
-    <div id="medicalNav" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item <?php echo $active == 'dashboard' ? 'is-active' : ''; ?>" href="dashboard.php">Dashboard</a>
-            <a class="navbar-item" href="citas_list.php">Citas</a>
-            <a class="navbar-item" href="pacientes_list.php">Pacientes</a>
-            <a class="navbar-item" href="medicos_list.php">Médicos</a>
-            <a class="navbar-item <?php echo $active == 'reportes' ? 'is-active' : ''; ?>" href="reportes.php">Reportes</a>
-            <a class="navbar-item <?php echo $active == 'notificaciones' ? 'is-active' : ''; ?>" href="notificaciones.php">Notificaciones <?php if ($badge) { ?><span class="tag is-danger is-rounded ml-2"><?php echo (int)$badge; ?></span><?php } ?></a>
+    <div class="container is-fluid">
+        <div class="navbar-brand">
+            <a class="navbar-item has-text-weight-bold is-size-4" href="dashboard.php" style="color: var(--medical-primary);">
+                <i class="fas fa-heartbeat mr-2"></i> MedGestión
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="medicalNav">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
         </div>
-        <div class="navbar-end">
-            <div class="navbar-item"><span class="tag is-link is-light"><?php echo md_h(md_role_label($user["tipo_usuario"])); ?></span></div>
-            <div class="navbar-item has-text-grey">Hola, <?php echo md_h($user["username"]); ?></div>
-            <div class="navbar-item"><a class="button is-light" href="login.php?a=logout">Salir</a></div>
+        <div id="medicalNav" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item <?php echo $active == 'dashboard' ? 'is-active' : ''; ?>" href="dashboard.php">
+                    <i class="fas fa-columns mr-2"></i> Dashboard
+                </a>
+                <a class="navbar-item <?php echo $active == 'citas' ? 'is-active' : ''; ?>" href="citas_list_bulma.php">
+                    <i class="fas fa-calendar-alt mr-2"></i> Citas
+                </a>
+                <a class="navbar-item <?php echo $active == 'pacientes' ? 'is-active' : ''; ?>" href="pacientes_list_bulma.php">
+                    <i class="fas fa-user-injured mr-2"></i> Pacientes
+                </a>
+                <a class="navbar-item <?php echo $active == 'medicos' ? 'is-active' : ''; ?>" href="medicos_list_bulma.php">
+                    <i class="fas fa-user-md mr-2"></i> Médicos
+                </a>
+                <a class="navbar-item <?php echo $active == 'reportes' ? 'is-active' : ''; ?>" href="reportes.php">
+                    <i class="fas fa-chart-pie mr-2"></i> Reportes
+                </a>
+                <a class="navbar-item" href="search_bulma.php">
+                    <i class="fas fa-search mr-2"></i> Buscar
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link is-arrowless">
+                        <span class="icon is-medium">
+                            <i class="fas fa-bell"></i>
+                        </span>
+                        <?php if ($badge) { ?>
+                            <span class="tag is-danger is-rounded" style="position: absolute; top: 5px; right: 5px;"><?php echo (int)$badge; ?></span>
+                        <?php } ?>
+                    </a>
+                    <div class="navbar-dropdown is-right is-boxed" style="min-width: 300px;">
+                        <p class="navbar-item is-size-7 has-text-weight-bold has-text-grey">NOTIFICACIONES DE HOY</p>
+                        <hr class="navbar-divider">
+                        <?php if (!count($notifications)) { ?>
+                            <p class="navbar-item has-text-grey-light">No hay alertas para hoy</p>
+                        <?php } ?>
+                        <?php foreach ($notifications as $notification) { ?>
+                            <a class="navbar-item" href="citas_view.php?editid1=<?php echo (int)$notification["id_cita"]; ?>">
+                                <div class="is-flex is-flex-direction-column">
+                                    <span class="is-size-7 has-text-weight-semibold"><?php echo md_h(substr($notification["hora"], 0, 5)); ?> - <?php echo md_h($notification["paciente"]); ?></span>
+                                    <span class="is-size-7 has-text-grey"><?php echo md_h($notification["estado"]); ?></span>
+                                </div>
+                            </a>
+                        <?php } ?>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item has-text-centered has-text-link is-size-7" href="notificaciones.php">Ver todas</a>
+                    </div>
+                </div>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        <div class="is-flex is-align-items-center">
+                            <figure class="image is-24x24 mr-2">
+                                <img class="is-rounded" src="https://ui-avatars.com/api/?name=<?php echo urlencode($user["username"]); ?>&background=2563eb&color=fff" alt="User">
+                            </figure>
+                            <span><?php echo md_h($user["username"]); ?></span>
+                        </div>
+                    </a>
+                    <div class="navbar-dropdown is-right is-boxed">
+                        <div class="navbar-item">
+                            <span class="tag is-link is-light is-medium is-fullwidth"><?php echo md_h(md_role_label($user["tipo_usuario"])); ?></span>
+                        </div>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item" href="login.php?a=logout">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -242,6 +324,13 @@ function md_render_footer()
     ?>
     </div>
 </section>
+<footer class="footer has-background-white mt-6 py-5">
+    <div class="content has-text-centered">
+        <p class="is-size-7 has-text-grey">
+            &copy; <?php echo date("Y"); ?> <strong>MedGestión</strong> - Sistema de Gestión de Citas Médicas Internas.
+        </p>
+    </div>
+</footer>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     var burgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
@@ -259,13 +348,22 @@ document.addEventListener('DOMContentLoaded', function () {
     <?php
 }
 
-function md_render_stat($label, $value, $hint, $color)
+function md_render_stat($label, $value, $hint, $color, $icon = "fa-chart-bar")
 {
     ?>
     <div class="column is-3-desktop is-6-tablet">
         <div class="box medical-stat <?php echo md_h($color); ?>">
-            <p class="heading"><?php echo md_h($label); ?></p>
-            <p class="title is-3"><?php echo md_h($value); ?></p>
+            <div class="level is-mobile mb-2">
+                <div class="level-left">
+                    <p class="heading"><?php echo md_h($label); ?></p>
+                </div>
+                <div class="level-right">
+                    <span class="icon is-medium has-text-grey-light">
+                        <i class="fas <?php echo md_h($icon); ?> fa-lg"></i>
+                    </span>
+                </div>
+            </div>
+            <p class="title is-3 mb-1"><?php echo md_h($value); ?></p>
             <p class="is-size-7 has-text-grey"><?php echo md_h($hint); ?></p>
         </div>
     </div>
@@ -277,20 +375,46 @@ function md_render_appointment_table($appointments, $audience)
     ?>
     <div class="table-container">
         <table class="table is-fullwidth is-hoverable medical-table">
-            <thead><tr><th>Fecha</th><th>Hora</th><th>Paciente</th><th>Médico</th><th>Estado</th><th>Motivo</th><th></th></tr></thead>
+            <thead>
+                <tr>
+                    <th><i class="far fa-calendar mr-1"></i> Fecha</th>
+                    <th><i class="far fa-clock mr-1"></i> Hora</th>
+                    <th><i class="far fa-user mr-1"></i> Paciente</th>
+                    <?php if ($audience != "medico") { ?><th><i class="fas fa-user-md mr-1"></i> Médico</th><?php } ?>
+                    <th><i class="fas fa-info-circle mr-1"></i> Estado</th>
+                    <th><i class="fas fa-notes-medical mr-1"></i> Motivo</th>
+                    <th></th>
+                </tr>
+            </thead>
             <tbody>
             <?php if (!count($appointments)) { ?>
-                <tr><td colspan="7" class="has-text-centered has-text-grey">No hay citas pendientes en este rango.</td></tr>
+                <tr><td colspan="7" class="has-text-centered has-text-grey py-6">No hay citas registradas en este periodo.</td></tr>
             <?php } ?>
             <?php foreach ($appointments as $appointment) { ?>
                 <tr>
-                    <td><?php echo md_h($appointment["fecha"]); ?></td>
-                    <td><?php echo md_h(substr($appointment["hora"], 0, 5)); ?></td>
+                    <td class="has-text-weight-semibold"><?php echo md_h($appointment["fecha"]); ?></td>
+                    <td><span class="tag is-white"><?php echo md_h(substr($appointment["hora"], 0, 5)); ?></span></td>
                     <td><?php echo md_h($appointment["paciente"]); ?></td>
-                    <td><?php echo md_h($appointment["medico"]); ?></td>
-                    <td><span class="tag <?php echo md_status_class($appointment["estado"]); ?> is-light"><?php echo md_h($appointment["estado"]); ?></span></td>
-                    <td><?php echo md_h($appointment["motivo"]); ?></td>
-                    <td><a class="button is-small is-link is-light" href="citas_view.php?editid1=<?php echo (int)$appointment["id_cita"]; ?>">Ver</a></td>
+                    <?php if ($audience != "medico") { ?><td><?php echo md_h($appointment["medico"]); ?></td><?php } ?>
+                    <td>
+                        <span class="tag <?php echo md_status_class($appointment["estado"]); ?> is-light">
+                            <i class="fas <?php echo md_status_icon($appointment["estado"]); ?> mr-1"></i>
+                            <?php echo md_h($appointment["estado"]); ?>
+                        </span>
+                    </td>
+                    <td class="is-size-7 has-text-grey"><?php echo md_h($appointment["motivo"]); ?></td>
+                    <td class="has-text-right">
+                        <div class="buttons are-small is-right">
+                            <a class="button is-link is-light" href="citas_view.php?editid1=<?php echo (int)$appointment["id_cita"]; ?>">
+                                <i class="fas fa-eye mr-1"></i> Ver
+                            </a>
+                            <?php if ($audience == "recepcion" || $audience == "admin") { ?>
+                            <a class="button is-info is-light" href="citas_edit.php?editid1=<?php echo (int)$appointment["id_cita"]; ?>">
+                                <i class="fas fa-edit mr-1"></i> Editar
+                            </a>
+                            <?php } ?>
+                        </div>
+                    </td>
                 </tr>
             <?php } ?>
             </tbody>
